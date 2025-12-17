@@ -2,11 +2,11 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8"/>
-  <title>手机 HUD 拖拽版</title>
+  <title>手机 AR-HUD 体验版</title>
   <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
   <meta name="theme-color" content="#000"/>
   <style>
-    /* ======== 与原文件完全相同的 CSS ======== */
+
     :root { --fs: 12vh; --rgb: 0,255,0; --alpha: 0; --text-alpha: 1; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; background: #000; color: rgba(var(--rgb), var(--text-alpha)); overflow: hidden; font-family: Roboto, Helvetica, Arial, sans-serif; }
@@ -717,16 +717,17 @@
         if (running) {
           // pause
           stopTimers();
-          startPauseBtn.textContent = '开始';
+          startPauseBtn.textContent = '开始导航';
           running = false;
         } else {
           // resume
           startTimers();
-          startPauseBtn.textContent = '暂停';
+          startPauseBtn.textContent = '暂停导航';
           running = true;
         }
       });
     }
   </script>
 </body>
+
 </html>
