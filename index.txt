@@ -91,7 +91,6 @@
   <!-- 控制面板 -->
   <div id="panel" class="panel draggable">
     <button id="mirrorBtn">镜像</button>
-    <button id="startPauseBtn">暂停</button>
   </div>
 
   <script>
@@ -615,41 +614,24 @@
     }
 
     showActive(activeIcon);
+    setInterval(() => {
+      const candidates = icons.filter(i => i !== activeIcon);
+      const next = candidates[Math.floor(Math.random() * candidates.length)];
+      switchIcon(next);
+    }, 5000);
 
-    /* ------------------ 可暂停的定时器：图标切换、假数据 ------------------ */
-    let iconTimer = null;
-    let speedTimer = null;
-    let distTimer = null;
+    /* ------------------ 假数据 ------------------ */
+    setInterval(() => {
+      const speed = Math.floor(Math.random() * (120 - 80 + 1)) + 80;
+      document.getElementById('spdVal').textContent = speed;
+    }, 300);
+
     let dist = 800;
-    function startTimers(){
-      if (!iconTimer) iconTimer = setInterval(() => {
-        const candidates = icons.filter(i => i !== activeIcon);
-        const next = candidates[Math.floor(Math.random() * candidates.length)];
-        switchIcon(next);
-      }, 5000);
-
-      if (!speedTimer) speedTimer = setInterval(() => {
-        const speed = Math.floor(Math.random() * (120 - 80 + 1)) + 80;
-        const spdEl = document.getElementById('spdVal');
-        if (spdEl) spdEl.textContent = speed;
-      }, 300);
-
-      if (!distTimer) distTimer = setInterval(() => {
-        dist -= 8;
-        if (dist <= 0) dist = 800;
-        const dEl = document.getElementById('distance');
-        if (dEl) dEl.textContent = dist + ' m';
-      }, 500);
-    }
-
-    function stopTimers(){
-      if (iconTimer) { clearInterval(iconTimer); iconTimer = null; }
-      if (speedTimer) { clearInterval(speedTimer); speedTimer = null; }
-      if (distTimer) { clearInterval(distTimer); distTimer = null; }
-    }
-
-    // 启动默认行为
-    startTimers();
+    setInterval(() => {
+      dist -= 8;
+      if (dist <= 0) dist = 800;
+      document.getElementById('distance').textContent = dist + ' m';
+    }, 500);
     
     /* ------------------ 在运行时把外部 SVG 内联以保持颜色可控 ------------------ */
     (async function inlineExternalSvgs(){
@@ -708,25 +690,6 @@
         console.warn('inlineExternalSvgs error', e);
       }
     })();
-
-    /* ------------------ 开始/暂停 控制 ------------------ */
-    const startPauseBtn = document.getElementById('startPauseBtn');
-    let running = true;
-    if (startPauseBtn) {
-      startPauseBtn.addEventListener('click', () => {
-        if (running) {
-          // pause
-          stopTimers();
-          startPauseBtn.textContent = '开始';
-          running = false;
-        } else {
-          // resume
-          startTimers();
-          startPauseBtn.textContent = '暂停';
-          running = true;
-        }
-      });
-    }
   </script>
 </body>
 </html>

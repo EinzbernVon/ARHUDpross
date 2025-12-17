@@ -1,0 +1,36 @@
+:root{
+  --fs:12vh;
+  --hue:120;
+  --alpha:0;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+html,body{ height:100%; background:#000; color:hsl(var(--hue) 100% 50%); overflow:hidden; font-family:Roboto,'Helvetica Neue',sans-serif; }
+.speed{
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  font-size:var(--fs);
+  font-weight:700;
+  letter-spacing:-0.05em;
+}
+.dim-layer{
+  position:fixed; inset:0; background:#000;
+  opacity:var(--alpha); pointer-events:none;
+}
+.panel{
+  position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+  background:rgba(0,0,0,.6); color:#fff; padding:10px 20px; border-radius:8px; display:none; gap:12px; align-items:center; }
+.panel label{ font-size:14px; }
+.panel input{ width:120px; }
+body.showPanel .panel{ display:flex; }
+body.mirror{ transform:scaleX(-1); }   /* 反射到挡风玻璃用 */
+/* ===== 新增元素统一用 currentColor，继承全局色相 ===== */
+.icon, .distance, .gauge {
+  position: absolute;
+  color: hsl(var(--hue) 100% 50%);   /* 与速度同色系 */
+  filter: drop-shadow(0 0 6px currentColor); /* 夜视发光 */
+}
+/* 具体位置随意调 top / left / transform */
+.turn-l        { top: 15%; left: 50%; transform: translateX(-50%); width: 18vh; }
+.distance      { bottom: 25%; left: 50%; transform: translateX(-50%); font-size: calc(var(--fs)*0.45); }
+.gauge         { bottom: 5%;  right: 5%; width: 22vh; }
+.rpm-text      { font-size: calc(var(--fs)*0.35); fill: currentColor; }

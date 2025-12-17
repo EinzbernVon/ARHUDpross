@@ -1,0 +1,9 @@
+{
+  "name": "HUD导航",
+  "short_name": "HUD",
+  "start_url": "index.html",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#000000",
+  "theme_color": "#000000"
+}
