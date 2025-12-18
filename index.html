@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
   <meta name="theme-color" content="#000"/>
   <style>
-
+    /* ======== 与原文件完全相同的 CSS ======== */
     :root { --fs: 12vh; --rgb: 0,255,0; --alpha: 0; --text-alpha: 1; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; background: #000; color: rgba(var(--rgb), var(--text-alpha)); overflow: hidden; font-family: Roboto, Helvetica, Arial, sans-serif; }
@@ -57,6 +57,11 @@
 
     <div id="iconUturn" class="draggable icon-wrapper">
       <img class="icon-img" src="assets/uturn.svg" alt="uturn">
+      <div class="resize-handle"></div>
+    </div>
+
+    <div id="iconVlimit" class="draggable icon-wrapper">
+      <img class="icon-img" src="assets/vlimit.png" alt="vlimit">
       <div class="resize-handle"></div>
     </div>
 
@@ -729,5 +734,4 @@
     }
   </script>
 </body>
-
 </html>
