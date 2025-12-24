@@ -30,10 +30,12 @@
     .example-img { width: 100%; height: 100%; display: block; object-fit: cover; }
     #hudRoot.mirrored { transform: scaleX(-1); transform-origin: 50% 50%; }
     #togglePanelBtn { position: fixed; left: 12px; bottom: 18px; padding: 8px 10px; border-radius: 6px; background: rgba(255,255,255,0.06); color: inherit; border: 1px solid rgba(255,255,255,0.06); backdrop-filter: blur(4px); z-index: 1000; }
+    #fullscreenBtn { position: fixed; right: 12px; bottom: 18px; padding: 8px 10px; border-radius: 6px; background: rgba(255,255,255,0.06); color: inherit; border: 1px solid rgba(255,255,255,0.06); backdrop-filter: blur(4px); z-index: 1000; }
   </style>
 </head>
 <body>
   <button id="togglePanelBtn">显示/隐藏</button>
+  <button id="fullscreenBtn">全屏</button>
 
   <div id="hudRoot">
     <div id="speed" class="draggable speed"><span id="spdVal">0</span><span class="unit">km/h</span></div>
@@ -731,6 +733,40 @@
           running = true;
         }
       });
+    }
+
+    /* ------------------ 全屏切换 控制 ------------------ */
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    function isFullscreen() {
+      return !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
+    }
+    function requestFullscreen(elem = document.documentElement) {
+      if (elem.requestFullscreen) return elem.requestFullscreen();
+      if (elem.webkitRequestFullscreen) return elem.webkitRequestFullscreen();
+      if (elem.mozRequestFullScreen) return elem.mozRequestFullScreen();
+      if (elem.msRequestFullscreen) return elem.msRequestFullscreen();
+      return Promise.reject(new Error('Fullscreen API not supported'));
+    }
+    function exitFullscreen() {
+      if (document.exitFullscreen) return document.exitFullscreen();
+      if (document.webkitExitFullscreen) return document.webkitExitFullscreen();
+      if (document.mozCancelFullScreen) return document.mozCancelFullScreen();
+      if (document.msExitFullscreen) return document.msExitFullscreen();
+      return Promise.reject(new Error('Fullscreen API not supported'));
+    }
+    function updateFullscreenBtn() {
+      if (!fullscreenBtn) return;
+      fullscreenBtn.textContent = isFullscreen() ? '退出全屏' : '全屏';
+    }
+    if (fullscreenBtn) {
+      fullscreenBtn.addEventListener('click', () => {
+        if (isFullscreen()) exitFullscreen();
+        else requestFullscreen().catch(() => {});
+      });
+      ['fullscreenchange','webkitfullscreenchange','mozfullscreenchange','MSFullscreenChange'].forEach(ev => {
+        document.addEventListener(ev, updateFullscreenBtn);
+      });
+      updateFullscreenBtn();
     }
   </script>
 </body>
